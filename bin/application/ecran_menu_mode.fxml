@@ -33,7 +33,7 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <ImageView fx:id="menu_mode_solo_button" fitHeight="150.0" fitWidth="200.0" layoutX="133.0" layoutY="194.0" onMouseClicked="#loadSoloSelection" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="menu_mode_solo_button" fitHeight="150.0" fitWidth="200.0" layoutX="133.0" layoutY="194.0" onMouseClicked="#loadSoloMode" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/ecran_menu_mode_solo_button.png" />
          </image>

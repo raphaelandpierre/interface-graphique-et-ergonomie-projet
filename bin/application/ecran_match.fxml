@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="menu_window" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.menu_solo_controler">
+<AnchorPane fx:id="menu_window" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.match_controler">
    <children>
       <Rectangle fx:id="match_select_j2" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="97.0" layoutX="434.0" layoutY="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" visible="false" width="96.0" />
       <Text layoutX="237.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic Tac Toe" textAlignment="CENTER">
