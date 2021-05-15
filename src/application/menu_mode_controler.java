@@ -28,7 +28,12 @@ public class menu_mode_controler {
 
 		try {
 			AnchorPane window = FXMLLoader.load(getClass().getResource("ecran_menu_solo_mode.fxml"));
+			if(p1Rond.isArmed()) {
+				match_controler.piece=2;
+				match_controler.piece_img="rond";
+			}
 			menu_window.getChildren().setAll(window);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,6 +46,7 @@ public class menu_mode_controler {
 
 		try {
 			AnchorPane window = FXMLLoader.load(getClass().getResource("ecran_match.fxml"));
+			match_controler.is2p=true;
 			menu_window.getChildren().setAll(window);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

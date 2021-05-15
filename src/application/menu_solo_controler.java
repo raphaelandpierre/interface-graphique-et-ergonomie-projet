@@ -1,106 +1,216 @@
 package application;
 
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.concurrent.CountDownLatch;
+
+import ai.Coup;
+import ai.MultiLayerPerceptron;
+import ai.SigmoidalTransferFunction;
+import ai.Test;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Rectangle;
 
 public class menu_solo_controler {
 
+	
+	public String path = System.getProperty("user.dir");
     @FXML
     private AnchorPane menu_window;
 
     @FXML
-    private Rectangle match_select_j2;
+    private RadioButton p1Rond;
 
     @FXML
-    private ImageView ecran_match_11;
+    private ToggleGroup p1Choice;
 
     @FXML
-    private ImageView ecran_match_12;
+    private RadioButton P1Croix;
 
     @FXML
-    private ImageView ecran_match_13;
+    private ImageView menu_mode_solo_facile_button;
 
     @FXML
-    private ImageView ecran_match_21;
+    private TextArea progresstext;
 
     @FXML
-    private ImageView ecran_match_22;
+    private ProgressBar progressBar;
 
     @FXML
-    private ImageView ecran_match_23;
+    private ImageView menu_mode_solo_moyen_button;
 
     @FXML
-    private ImageView ecran_match_31;
+    private ImageView menu_mode_solo_difficile_button;
+    
+    
+    
+    AnchorPane window_ai = null;
+    
+    CountDownLatch latch = new CountDownLatch(1); 
+    @FXML
+    void loadSoloDifficileMatch(MouseEvent event) {
+
+		try {
+			AnchorPane window = FXMLLoader.load(getClass().getResource("ecran_match.fxml"));
+			menu_window.getChildren().setAll(window);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
+    
+    
 
     @FXML
-    private ImageView ecran_match_32;
+    void loadSoloFacileMatch(MouseEvent event) {
+		try {
+			window_ai=FXMLLoader.load(getClass().getResource("ecran_match.fxml"));
+			AnchorPane window = FXMLLoader.load(getClass().getResource("ecran_match.fxml"));
+			ChangeListener<String> message = new ChangeListener<String>() {
 
-    @FXML
-    private ImageView ecran_match_33;
-
-    @FXML
-    private ImageView match_j1_icon;
-
-    @FXML
-    private ImageView match_j2_icon;
-
-    @FXML
-    private Rectangle match_select_j1;
-
-    @FXML
-    private ImageView ecran_match_111;
-
-    @FXML
-    void ecran_match_11_play(MouseEvent event) {
-
+	    		@Override
+	    		public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+	    			// TODO Auto-generated method stub
+	    			progresstext.setText(arg2);
+	    			
+	    		}
+	    		
+	    	};
+	    	
+	    	progressBar.progressProperty().bind(task.progressProperty());
+	    	
+	    	task.messageProperty().addListener(message);
+	    	
+	    	Thread th = new Thread(task);
+	        th.setDaemon(true);
+	        th.start();
+	        latch.await();
+	        menu_window.getChildren().setAll(window);
+			//menu_window.getChildren().setAll(window);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
     }
 
     @FXML
-    void ecran_match_12_play(MouseEvent event) {
+    void loadSoloMoyenMatch(MouseEvent event) {
+		try {
+			AnchorPane window = FXMLLoader.load(getClass().getResource("ecran_match.fxml"));
+			menu_window.getChildren().setAll(window);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    public void testTrain(ActionEvent event) {
+    	
+    	ChangeListener<String> message = new ChangeListener<String>() {
 
+    		@Override
+    		public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+    			// TODO Auto-generated method stub
+    			progresstext.setText(arg2);
+    			
+    		}
+    		
+    	};
+    	
+    	progressBar.progressProperty().bind(task.progressProperty());
+    	
+    	task.messageProperty().addListener(message);
+    	
+    	Thread th = new Thread(task);
+        th.setDaemon(true);
+        th.start();
+        try {
+			latch.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+    	
     }
 
-    @FXML
-    void ecran_match_13_play(MouseEvent event) {
+    Task<Void> task = new Task<Void>() {
 
-    }
+    	@Override
+    	protected Void call() throws Exception {
+    		// TODO Auto-generated method stub
+    		int size=9;
+    	    DecimalFormat df1 = new DecimalFormat("0.000");
 
-    @FXML
-    void ecran_match_21_play(MouseEvent event) {
+    		try {
+    			System.out.println();
+    			System.out.println("START TRAINING ...");
+    			System.out.println();
+    			//
+    			int[] layers = new int[]{ size, 128, size };
+    			//
+    			double error = 0.0 ;
+    			MultiLayerPerceptron net = new MultiLayerPerceptron(layers, 0.1, new SigmoidalTransferFunction());
+    			double epochs = 10000000 ;
 
-    }
+    			System.out.println("---");
+    			System.out.println("Load data ...");
+    			HashMap<Integer, Coup> mapTrain = Test.loadCoupsFromFile("./resources/train_dev_test/train.txt");
+    			HashMap<Integer, Coup> mapDev = Test.loadCoupsFromFile("./resources/train_dev_test/dev.txt");
+    			HashMap<Integer, Coup> mapTest = Test.loadCoupsFromFile("./resources/train_dev_test/test.txt");
+    			System.out.println("---");
+    			//TRAINING ...
+    			for(int i = 0; i < epochs; i++){
 
-    @FXML
-    void ecran_match_22_play(MouseEvent event) {
+    				Coup c = null ;
+    				while ( c == null )
+    					c = mapTrain.get((int)(Math.round(Math.random() * mapTrain.size())));
 
-    }
+    				error += net.backPropagate(c.in, c.out);
 
-    @FXML
-    void ecran_match_23_play(MouseEvent event) {
+    				if ( i % 10000 == 0 ) {
+    					
+    					//progresstext.setText(df1.format((i/epochs*100))+"% de la fin du processus \n" + "Error is "+ (error/(double)i));
+    					//progressBar.setProgress(i/epochs);
+    					updateMessage(df1.format((i/epochs*100))+"% de la fin du processus \n" + "Error is "+ (error/(double)i));
+    				}
+    			updateProgress(i,epochs);
+    			}
+    			error /= epochs ;
+    			if ( epochs > 0 )
+    				System.out.println("Error is "+error);
+    			//
+    			updateMessage("Learning completed!");
+    			latch.countDown();
+    			net.save(("./resources/train_dev_test/model.ai"));
+    			
+    		} 
+    		catch (Exception e) {
+    			System.out.println("Test.test()");
+    			e.printStackTrace();
+    			System.exit(-1);
+    		}
 
-    }
-
-    @FXML
-    void ecran_match_31_play(MouseEvent event) {
-
-    }
-
-    @FXML
-    void ecran_match_32_play(MouseEvent event) {
-
-    }
-
-    @FXML
-    void ecran_match_33_play(MouseEvent event) {
-
-    }
-
-    @FXML
-    void ecran_match_save(MouseEvent event) {
-
-    }
+    		
+    		return null;
+    	}
+    	
+    };
 
 }
