@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="menu_window" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.menu_solo_controler">
+   <children>
+      <Rectangle fx:id="match_select_j2" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="97.0" layoutX="434.0" layoutY="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" visible="false" width="96.0" />
+      <Text layoutX="237.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic Tac Toe" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Text>
+      <ImageView fx:id="ecran_match_11" fitHeight="97.0" fitWidth="96.0" layoutX="155.0" layoutY="154.0" onMouseClicked="#ecran_match_11_play" pickOnBounds="true" preserveRatio="true" />
+      <Line endX="150.0" layoutX="300.0" layoutY="350.0" startX="-150.0" />
+      <Line endX="150.0" layoutX="300.0" layoutY="250.0" startX="-150.0" />
+      <Line endX="-150.0" endY="-300.0" layoutX="400.0" layoutY="450.0" startX="-150.0" />
+      <Line endX="-150.0" endY="-300.0" layoutX="500.0" layoutY="450.0" startX="-150.0" />
+      <ImageView fx:id="ecran_match_12" fitHeight="97.0" fitWidth="96.0" layoutX="252.0" layoutY="154.0" onMouseClicked="#ecran_match_12_play" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="ecran_match_13" fitHeight="97.0" fitWidth="96.0" layoutX="351.0" layoutY="154.0" onMouseClicked="#ecran_match_13_play" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="ecran_match_21" fitHeight="97.0" fitWidth="96.0" layoutX="155.0" layoutY="252.0" onMouseClicked="#ecran_match_21_play" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="ecran_match_22" fitHeight="97.0" fitWidth="96.0" layoutX="252.0" layoutY="252.0" onMouseClicked="#ecran_match_22_play" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="ecran_match_23" fitHeight="97.0" fitWidth="96.0" layoutX="351.0" layoutY="252.0" onMouseClicked="#ecran_match_23_play" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="ecran_match_31" fitHeight="97.0" fitWidth="96.0" layoutX="155.0" layoutY="351.0" onMouseClicked="#ecran_match_31_play" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="ecran_match_32" fitHeight="97.0" fitWidth="96.0" layoutX="252.0" layoutY="351.0" onMouseClicked="#ecran_match_32_play" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="ecran_match_33" fitHeight="97.0" fitWidth="96.0" layoutX="351.0" layoutY="351.0" onMouseClicked="#ecran_match_33_play" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="match_j1_icon" fitHeight="61.0" fitWidth="61.0" layoutX="89.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="match_j2_icon" fitHeight="61.0" fitWidth="61.0" layoutX="451.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true" />
+      <Text layoutX="434.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur 2" textAlignment="CENTER" wrappingWidth="96.0">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Text>
+      <Rectangle fx:id="match_select_j1" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="97.0" layoutX="72.0" layoutY="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="96.0" />
+      <Text layoutX="72.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur 1" textAlignment="CENTER" wrappingWidth="96.0">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Text>
+      <ImageView fx:id="ecran_match_111" fitHeight="61.0" fitWidth="61.0" onMouseClicked="#ecran_match_save" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/ecran_match_enregistrer.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
