@@ -124,6 +124,7 @@ public class match_controler {
     		case 7:vert=2;hori=1;break;
     		case 8:vert=2;hori=2;break;
     		}
+    		System.out.println("robot chooses:"+String.valueOf(cas));
     		}
     		//le move a �t� fait mais il faut trouver quelle case a �t� jouer
     		try {
@@ -144,6 +145,7 @@ public class match_controler {
     		    robot.mouseMove((int)target.getX(), (int)target.getY());
     		    robot.mousePress(16);
     		    robot.mouseRelease(16);
+    		    System.out.println("robot has clicked on:"+String.valueOf((int)target.getX()+" and " +String.valueOf((int)target.getY())));
     		    //robot.mouseMove((int) originalLocation.getX(), (int)originalLocation.getY());
     		} catch (AWTException e) {
     		    e.printStackTrace();
