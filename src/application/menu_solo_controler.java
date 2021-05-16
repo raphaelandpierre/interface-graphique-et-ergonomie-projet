@@ -1,8 +1,10 @@
 package application;
 
 import java.io.IOException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 import java.util.concurrent.CountDownLatch;
 
 import ai.Coup;
@@ -15,6 +17,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
@@ -54,6 +57,25 @@ public class menu_solo_controler {
     @FXML
     private ImageView menu_mode_solo_difficile_button;
     
+    @FXML
+    private AnchorPane help_window;
+
+    @FXML
+    private Button help_close_button;
+	
+	@FXML
+	public void openHelp(MouseEvent event) {
+		
+		help_window.setVisible(true);
+		
+	}
+	
+    @FXML
+    void closeHelp(MouseEvent event) {
+
+    	help_window.setVisible(false);
+    	
+    }
     
     
     AnchorPane window_ai = null;

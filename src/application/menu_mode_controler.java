@@ -1,9 +1,12 @@
 package application;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
@@ -23,6 +26,26 @@ public class menu_mode_controler {
     @FXML
     private RadioButton P1Croix;
 
+    @FXML
+    private AnchorPane help_window;
+
+    @FXML
+    private Button help_close_button;
+	
+	@FXML
+	public void openHelp(MouseEvent event) {
+		
+		help_window.setVisible(true);
+		
+	}
+	
+    @FXML
+    void closeHelp(MouseEvent event) {
+
+    	help_window.setVisible(false);
+    	
+    }
+    
     @FXML
     void loadSoloMode(MouseEvent event) {
 

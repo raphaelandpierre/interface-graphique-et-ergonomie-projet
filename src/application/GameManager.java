@@ -27,7 +27,7 @@ public class GameManager {
 		return false;
 		}
 	}
-	public Boolean isTie() {//retourne vrai si c'est egalité,faux sinon
+	public Boolean isTie() {//retourne vrai si c'est egalitï¿½,faux sinon
 		for(int i=0;i<3;i++) {
 			for(int j=0;j<3;j++) {
 				if(gameState[i][j]==0) {
@@ -63,9 +63,9 @@ public class GameManager {
 		return output;
 	}
 	public Boolean CheckWin(int player_piece) {//retourne false si pas de gagnant,true si un gagnant
-		for(int i =0;i<2;i++) {//check horizontalement
+		for(int i =0;i<3;i++) {//check horizontalement
 			int score=0; 
-			for(int j = 0; j < 2;j++) {
+			for(int j = 0; j < 3;j++) {
 				if(gameState[i][j]==player_piece) {
 					score +=1;
 				}
@@ -75,9 +75,9 @@ public class GameManager {
 			}
 		}
 		
-		for(int i =0;i<2;i++) {//check verticalement
+		for(int i =0;i<3;i++) {//check verticalement
 			int score=0; 
-			for(int j = 0; j < 2;j++) {
+			for(int j = 0; j < 3;j++) {
 				if(gameState[j][i]==player_piece) {
 					score +=1;
 				}

@@ -2,11 +2,14 @@ package application;
 
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.io.IOException;
 
 import ai.MultiLayerPerceptron;
 import ai.SigmoidalTransferFunction;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -65,13 +68,31 @@ public class match_controler {
 
     @FXML
     private ImageView ecran_match_111;
+    
+    @FXML
+    private Button ecran_match_go_home;
+    
+    @FXML
+    private Button ecran_match_replay;
 
     @FXML
-    void CheckState() {//vérifie l'etat du board
+    void CheckState() {//vï¿½rifie l'etat du board
     	if(manager.CheckWin(piece)==true) {
-    		System.out.println("les "+piece_img+"ont gagné,trop bien");
+    		System.out.println("les "+piece_img+" ont gagnï¿½,trop bien");
+    		ecran_match_11.setDisable(true);
+    		ecran_match_12.setDisable(true);
+    		ecran_match_13.setDisable(true);
+    		ecran_match_21.setDisable(true);
+    		ecran_match_22.setDisable(true);
+    		ecran_match_23.setDisable(true);
+    		ecran_match_31.setDisable(true);
+    		ecran_match_32.setDisable(true);
+    		ecran_match_33.setDisable(true);
+    		ecran_match_go_home.setVisible(true);
+    		ecran_match_replay.setVisible(true);
+    		
     	}else if(manager.isTie()==true) {
-    		System.out.println("c'est une égalité Thierry");
+    		System.out.println("c'est une ï¿½galitï¿½ Thierry");
     	}
     	manager.debugDisplay();
     	if(is2p==false){//contre l'ia,calcul next move
@@ -104,7 +125,7 @@ public class match_controler {
     		case 8:vert=2;hori=2;break;
     		}
     		}
-    		//le move a été fait mais il faut trouver quelle case a été jouer
+    		//le move a ï¿½tï¿½ fait mais il faut trouver quelle case a ï¿½tï¿½ jouer
     		try {
     		    Robot robot = new java.awt.Robot();
     		    ImageView target = null;
@@ -119,7 +140,7 @@ public class match_controler {
         		case 7:target=ecran_match_32;break;
         		case 8:target=ecran_match_33;break;
     		    }
-    		    TurnSwap();//fast changement de tour pour que l'IA soit la piece opposé
+    		    TurnSwap();//fast changement de tour pour que l'IA soit la piece opposï¿½
     		    robot.mouseMove((int)target.getX(), (int)target.getY());
     		    robot.mousePress(16);
     		    robot.mouseRelease(16);
@@ -139,6 +160,17 @@ public class match_controler {
     	}
     }
     
+    void PlayerSwap() {
+    	if(match_select_j1.isVisible()) {
+    		match_select_j1.setVisible(false);
+    		match_select_j2.setVisible(true);
+    	}
+    	else {
+    		match_select_j1.setVisible(true);
+    		match_select_j2.setVisible(false);
+    	}
+    }
+    
     static void LoadModel() {//charge le model d'IA
     	net.load(("./resources/train_dev_test/model.ai"));
     }
@@ -152,6 +184,7 @@ public class match_controler {
     		if(is2p==true) {
     			TurnSwap();
     		}
+    		PlayerSwap();
     	}
     }
 
@@ -163,6 +196,7 @@ public class match_controler {
     		if(is2p==true) {
     			TurnSwap();
     		}
+    		PlayerSwap();
     	}
     }
 
@@ -174,6 +208,7 @@ public class match_controler {
     		if(is2p==true) {
     			TurnSwap();
     		}
+    		PlayerSwap();
     	}
     }
 
@@ -185,6 +220,7 @@ public class match_controler {
     		if(is2p==true) {
     			TurnSwap();
     		}
+    		PlayerSwap();
     	}
     }
 
@@ -196,6 +232,7 @@ public class match_controler {
     		if(is2p==true) {
     			TurnSwap();
     		}
+    		PlayerSwap();
     	}
     }
 
@@ -207,6 +244,7 @@ public class match_controler {
     		if(is2p==true) {
     			TurnSwap();
     		}
+    		PlayerSwap();
     	}
     }
 
@@ -218,6 +256,7 @@ public class match_controler {
     		if(is2p==true) {
     			TurnSwap();
     		}
+    		PlayerSwap();
     	}
     }
 
@@ -229,6 +268,7 @@ public class match_controler {
     		if(is2p==true) {
     			TurnSwap();
     		}
+    		PlayerSwap();
     	}
     }
 
@@ -240,6 +280,7 @@ public class match_controler {
     		if(is2p==true) {
     			TurnSwap();
     		}
+    		PlayerSwap();
     	}
     }
 
@@ -248,5 +289,45 @@ public class match_controler {
 
     }
     
+    @FXML
+    void ecran_match_replay(MouseEvent event) {
+    	
+		ecran_match_11.setDisable(false);
+		ecran_match_12.setDisable(false);
+		ecran_match_13.setDisable(false);
+		ecran_match_21.setDisable(false);
+		ecran_match_22.setDisable(false);
+		ecran_match_23.setDisable(false);
+		ecran_match_31.setDisable(false);
+		ecran_match_32.setDisable(false);
+		ecran_match_33.setDisable(false);
+		ecran_match_11.setImage(new Image(getClass().getResourceAsStream("images/ecran_match_blanc.png")));
+		ecran_match_12.setImage(new Image(getClass().getResourceAsStream("images/ecran_match_blanc.png")));
+		ecran_match_13.setImage(new Image(getClass().getResourceAsStream("images/ecran_match_blanc.png")));
+		ecran_match_21.setImage(new Image(getClass().getResourceAsStream("images/ecran_match_blanc.png")));
+		ecran_match_22.setImage(new Image(getClass().getResourceAsStream("images/ecran_match_blanc.png")));
+		ecran_match_23.setImage(new Image(getClass().getResourceAsStream("images/ecran_match_blanc.png")));
+		ecran_match_31.setImage(new Image(getClass().getResourceAsStream("images/ecran_match_blanc.png")));
+		ecran_match_32.setImage(new Image(getClass().getResourceAsStream("images/ecran_match_blanc.png")));
+		ecran_match_33.setImage(new Image(getClass().getResourceAsStream("images/ecran_match_blanc.png")));
+		match_select_j1.setVisible(true);
+		match_select_j2.setVisible(false);
+		ecran_match_go_home.setVisible(false);
+		ecran_match_replay.setVisible(false);
+		piece = 1;
+		piece_img = "croix";
+		manager = new GameManager();
+    }
+    
+    @FXML
+    void ecran_match_go_home(MouseEvent event) {
+		try {
+			AnchorPane window = FXMLLoader.load(getClass().getResource("ecran_menu_home.fxml"));
+			menu_window.getChildren().setAll(window);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
 }

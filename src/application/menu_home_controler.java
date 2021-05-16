@@ -30,6 +30,11 @@ public class menu_home_controler implements Initializable{
     @FXML
     private ImageView menu_home_start_button;
 	
+    @FXML
+    private AnchorPane help_window;
+
+    @FXML
+    private Button help_close_button;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -38,6 +43,19 @@ public class menu_home_controler implements Initializable{
 		
 	}
 	
+	@FXML
+	public void openHelp(MouseEvent event) {
+		
+		help_window.setVisible(true);
+		
+	}
+	
+    @FXML
+    void closeHelp(MouseEvent event) {
+
+    	help_window.setVisible(false);
+    	
+    }
 	
 	@FXML
 	public void loadSavedGame(MouseEvent event ) {
