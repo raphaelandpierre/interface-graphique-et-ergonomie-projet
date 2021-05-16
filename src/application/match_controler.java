@@ -3,6 +3,9 @@ package application;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Arrays;
 
 import ai.MultiLayerPerceptron;
 import ai.SigmoidalTransferFunction;
@@ -22,6 +25,7 @@ public class match_controler {
 	public static int piece = 1;
 	public static String piece_img = "croix";
 	public static boolean is2p = false;
+	public boolean aiturn = false;
 	public static int[] layers = new int[]{ 9, 128, 9 };
 	public static MultiLayerPerceptron net = new MultiLayerPerceptron(layers, 0.1, new SigmoidalTransferFunction());
     @FXML
@@ -90,29 +94,50 @@ public class match_controler {
     		ecran_match_33.setDisable(true);
     		ecran_match_go_home.setVisible(true);
     		ecran_match_replay.setVisible(true);
+    		aiturn=false;
     		
     	}else if(manager.isTie()==true) {
     		System.out.println("c'est une �galit� Thierry");
+    		ecran_match_11.setDisable(true);
+    		ecran_match_12.setDisable(true);
+    		ecran_match_13.setDisable(true);
+    		ecran_match_21.setDisable(true);
+    		ecran_match_22.setDisable(true);
+    		ecran_match_23.setDisable(true);
+    		ecran_match_31.setDisable(true);
+    		ecran_match_32.setDisable(true);
+    		ecran_match_33.setDisable(true);
+    		ecran_match_go_home.setVisible(true);
+    		ecran_match_replay.setVisible(true);
+    		aiturn=false;
     	}
     	manager.debugDisplay();
-    	if(is2p==false){//contre l'ia,calcul next move
+    	if(is2p==false && aiturn==true){//contre l'ia,calcul next move
     		double [] next = net.forwardPropagation(manager.getAIGameState());
+    		aiturn=false;
     		double max=-1.0;
     		int vert=-1;
     		int hori=-1;
     		int cas=-1;//case cibler par l'ia
+    		int aipiece=0;
+    		String piece_img_ai;
     		if(piece==1) {
-    			int aipiece=2;
+    			aipiece=2;
+    			piece_img_ai="rond";
     		}else {
-    			int aipiece=1;
+    			aipiece=1;
+    			piece_img_ai="croix";
     		}
-    		while(!manager.MakeMove(vert,hori,1)) {
-    		for(int i=0;i<next.length;i++) {
+    		while(!manager.MakeMove(vert,hori,aipiece)) {
+    			for(int i=0;i<next.length;i++) {
     			if(next[i]>max) {
     				max=next[i];
     				cas=i;
     			}
+    			
     		}
+    		next[cas]=0.0;
+    		max=0;
     		switch(cas) {
     		case 0:vert=0;hori=0;break;
     		case 1:vert=0;hori=1;break;
@@ -128,26 +153,25 @@ public class match_controler {
     		}
     		//le move a �t� fait mais il faut trouver quelle case a �t� jouer
     		try {
-    		    Robot robot = new java.awt.Robot();
-    		    ImageView target = null;
+    		    //Robot robot = new java.awt.Robot();
+    		    //ImageView target = null;
+    		    //TurnSwap();//fast changement de tour pour que l'IA soit la piece oppos�
     		    switch(cas) {
-        		case 0:target=ecran_match_11;
-        		case 1:target=ecran_match_12;break;
-        		case 2:target=ecran_match_13;break;
-        		case 3:target=ecran_match_21;break;
-        		case 4:target=ecran_match_22;break;
-        		case 5:target=ecran_match_23;break;
-        		case 6:target=ecran_match_31;break;
-        		case 7:target=ecran_match_32;break;
-        		case 8:target=ecran_match_33;break;
+        		case 0:ecran_match_11.setImage(new Image(getClass().getResourceAsStream("images/ecran_match_"+piece_img_ai+".png")));break;
+        		case 1:ecran_match_12.setImage(new Image(getClass().getResourceAsStream("images/ecran_match_"+piece_img_ai+".png")));break;
+        		case 2:ecran_match_13.setImage(new Image(getClass().getResourceAsStream("images/ecran_match_"+piece_img_ai+".png")));break;
+        		case 3:ecran_match_21.setImage(new Image(getClass().getResourceAsStream("images/ecran_match_"+piece_img_ai+".png")));break;
+        		case 4:ecran_match_22.setImage(new Image(getClass().getResourceAsStream("images/ecran_match_"+piece_img_ai+".png")));break;
+        		case 5:ecran_match_23.setImage(new Image(getClass().getResourceAsStream("images/ecran_match_"+piece_img_ai+".png")));break;
+        		case 6:ecran_match_31.setImage(new Image(getClass().getResourceAsStream("images/ecran_match_"+piece_img_ai+".png")));break;
+        		case 7:ecran_match_32.setImage(new Image(getClass().getResourceAsStream("images/ecran_match_"+piece_img_ai+".png")));break;
+        		case 8:ecran_match_33.setImage(new Image(getClass().getResourceAsStream("images/ecran_match_"+piece_img_ai+".png")));break;
     		    }
-    		    TurnSwap();//fast changement de tour pour que l'IA soit la piece oppos�
-    		    robot.mouseMove((int)target.getX(), (int)target.getY());
-    		    robot.mousePress(16);
-    		    robot.mouseRelease(16);
-    		    System.out.println("robot has clicked on:"+String.valueOf((int)target.getX()+" and " +String.valueOf((int)target.getY())));
+    		    PlayerSwap();
+    		    CheckState();
+    		    //System.out.println("robot has clicked on:"+String.valueOf((int)target.getX()+" and " +String.valueOf((int)target.getY())));
     		    //robot.mouseMove((int) originalLocation.getX(), (int)originalLocation.getY());
-    		} catch (AWTException e) {
+    		} catch (Exception e) {
     		    e.printStackTrace();
     		}
     	}
@@ -185,6 +209,8 @@ public class match_controler {
     		CheckState();
     		if(is2p==true) {
     			TurnSwap();
+    		}else {
+    			aiturn=true;
     		}
     		PlayerSwap();
     	}
@@ -197,8 +223,11 @@ public class match_controler {
     		CheckState();
     		if(is2p==true) {
     			TurnSwap();
+    		}else {
+    			aiturn=true;
     		}
     		PlayerSwap();
+    		
     	}
     }
 
@@ -209,6 +238,8 @@ public class match_controler {
     		CheckState();
     		if(is2p==true) {
     			TurnSwap();
+    		}else {
+    			aiturn=true;
     		}
     		PlayerSwap();
     	}
@@ -221,6 +252,8 @@ public class match_controler {
     		CheckState();
     		if(is2p==true) {
     			TurnSwap();
+    		}else {
+    			aiturn=true;
     		}
     		PlayerSwap();
     	}
@@ -233,6 +266,8 @@ public class match_controler {
     		CheckState();
     		if(is2p==true) {
     			TurnSwap();
+    		}else {
+    			aiturn=true;
     		}
     		PlayerSwap();
     	}
@@ -245,6 +280,8 @@ public class match_controler {
     		CheckState();
     		if(is2p==true) {
     			TurnSwap();
+    		}else {
+    			aiturn=true;
     		}
     		PlayerSwap();
     	}
@@ -257,6 +294,8 @@ public class match_controler {
     		CheckState();
     		if(is2p==true) {
     			TurnSwap();
+    		}else {
+    			aiturn=true;
     		}
     		PlayerSwap();
     	}
@@ -269,6 +308,8 @@ public class match_controler {
     		CheckState();
     		if(is2p==true) {
     			TurnSwap();
+    		}else {
+    			aiturn=true;
     		}
     		PlayerSwap();
     	}
@@ -281,6 +322,8 @@ public class match_controler {
     		CheckState();
     		if(is2p==true) {
     			TurnSwap();
+    		}else {
+    			aiturn=true;
     		}
     		PlayerSwap();
     	}

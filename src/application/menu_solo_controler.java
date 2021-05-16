@@ -119,8 +119,13 @@ public class menu_solo_controler {
 	    	Thread th = new Thread(task);
 	        th.setDaemon(true);
 	        th.start();
-	        latch.await();
-	        menu_window.getChildren().setAll(window);
+	        task.setOnSucceeded(e ->{
+	        	if(p1Rond.isSelected()) {
+	        		match_controler.piece=2;
+	        		match_controler.piece_img="rond";
+	        	}
+	        	menu_window.getChildren().setAll(window);
+	        });
 			//menu_window.getChildren().setAll(window);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -162,6 +167,9 @@ public class menu_solo_controler {
     	Thread th = new Thread(task);
         th.setDaemon(true);
         th.start();
+        task.setOnSucceeded(e ->{
+        	
+        });
         try {
 			latch.await();
 		} catch (InterruptedException e) {
@@ -173,7 +181,7 @@ public class menu_solo_controler {
     }
 
     Task<Void> task = new Task<Void>() {
-
+    	
     	@Override
     	protected Void call() throws Exception {
     		// TODO Auto-generated method stub
